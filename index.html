@@ -5,34 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GrowFin Multi Calculator</title>
   <link rel="icon" href="favicon.png" type="image/png">
-  <meta property="og:title" content="GrowFin Multi Calculator">
-  <meta property="og:description" content="Your one-stop tool for SIP, Lumpsum, Retirement & Goal Planning">
-  <meta property="og:image" content="logo.png">
-  <meta property="og:url" content="https://anushka-106.github.io/GrowFinWealth-Multi-calculator/">
-
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       padding: 20px;
-      background-color: #f9f9f9;
+      background: linear-gradient(to right, #f1f8e9, #e8f5e9);
       color: #333;
       margin: 0;
-      box-sizing: border-box;
     }
-
-    h1 {
+    header {
       text-align: center;
+      padding: 10px;
+    }
+    h1 {
       color: #2e7d32;
-      font-size: 2em;
-      margin-bottom: 20px;
+      font-size: 2.2em;
+      margin-bottom: 10px;
     }
-
-    h2 {
-      color: #388e3c;
-      font-size: 1.5em;
-      margin-top: 20px;
-    }
-
     select, input, button {
       padding: 12px;
       margin: 8px 0;
@@ -42,59 +31,45 @@
       border-radius: 6px;
       font-size: 16px;
     }
-
     button {
       background-color: #4caf50;
       color: white;
       border: none;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
-
     button:hover {
-      background-color: #45a049;
+      background-color: #388e3c;
+      transform: scale(1.02);
     }
-
     .calculator {
       display: none;
-      margin-top: 20px;
       background: #ffffff;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
     }
-
     .result {
       margin-top: 10px;
       font-weight: bold;
       color: #2e7d32;
     }
-
-    .emoji {
-      font-size: 24px;
-      margin-right: 8px;
-    }
-
-    @media (max-width: 600px) {
-      select, input, button {
-        width: 100%;
-        font-size: 14px;
-      }
-
-      h1 {
-        font-size: 1.5em;
-      }
-
-      h2 {
-        font-size: 1.2em;
-      }
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+      font-size: 0.9em;
     }
   </style>
 </head>
-
 <body>
-  <h1>🌱 GrowFin Multi Calculator</h1>
+  <header>
+    <h1>🌱 GrowFin Multi Calculator</h1>
+    <p>Plan smartly. Invest wisely. Grow wealth.</p>
+  </header>
 
-  <label for="calcType"><span class="emoji">🛠️</span>Choose Calculator:</label>
+  <label for="calcType">🛠️ Choose Calculator:</label>
   <select id="calcType" onchange="showCalculator()">
     <option value="sip">📈 SIP Calculator</option>
     <option value="lumpsum">💰 Lumpsum Calculator</option>
@@ -103,106 +78,139 @@
     <option value="child">👶 Child Education Planning</option>
   </select>
 
-  <!-- SIP Calculator -->
-  <div id="sip" class="calculator">
-    <h2>📈 SIP Calculator</h2>
-    <input type="number" id="sipAmount" placeholder="Monthly Investment (₹)">
-    <input type="number" id="sipYears" placeholder="Years">
-    <input type="number" id="sipRate" placeholder="Annual Return (%)">
-    <button onclick="calculateSIP()">Calculate</button>
-    <div class="result" id="sipResult"></div>
-  </div>
+  <div id="calculators"></div>
 
-  <!-- Lumpsum Calculator -->
-  <div id="lumpsum" class="calculator">
-    <h2>💰 Lumpsum Calculator</h2>
-    <input type="number" id="lumpAmount" placeholder="Lumpsum Amount (₹)">
-    <input type="number" id="lumpYears" placeholder="Years">
-    <input type="number" id="lumpRate" placeholder="Annual Return (%)">
-    <button onclick="calculateLumpsum()">Calculate</button>
-    <div class="result" id="lumpResult"></div>
-  </div>
-
-  <!-- Retirement Planner -->
-  <div id="retirement" class="calculator">
-    <h2>👵 Retirement Planner</h2>
-    <input type="number" id="currentAge" placeholder="Current Age">
-    <input type="number" id="retireAge" placeholder="Retirement Age">
-    <input type="number" id="monthlyExpense" placeholder="Monthly Expense Today (₹)">
-    <input type="number" id="inflation" placeholder="Inflation Rate (%)">
-    <input type="number" id="postRetReturn" placeholder="Post Retirement Return (%)">
-    <button onclick="calculateRetirement()">Calculate</button>
-    <div class="result" id="retireResult"></div>
-  </div>
-
-  <!-- Goal Planning -->
-  <div id="goal" class="calculator">
-    <h2>🎯 Goal Planning</h2>
-    <input type="number" id="goalAmount" placeholder="Goal Amount (₹)">
-    <input type="number" id="goalYears" placeholder="Years to Goal">
-    <input type="number" id="goalReturn" placeholder="Expected Return (%)">
-    <button onclick="calculateGoal()">Calculate</button>
-    <div class="result" id="goalResult"></div>
-  </div>
-
-  <!-- Child Education Planning -->
-  <div id="child" class="calculator">
-    <h2>👶 Child Education Planning</h2>
-    <input type="number" id="childExpense" placeholder="Future Education Cost (₹)">
-    <input type="number" id="childYears" placeholder="Years Left">
-    <input type="number" id="childReturn" placeholder="Expected Return (%)">
-    <button onclick="calculateChild()">Calculate</button>
-    <div class="result" id="childResult"></div>
-  </div>
+  <footer>
+    © 2025 GrowFin Wealth | Designed with 💚 by Anushka Gaiki
+  </footer>
 
   <script>
+    const calculatorTemplates = {
+      sip: `
+        <div class="calculator">
+          <h2>📈 SIP Calculator</h2>
+          <input type="number" id="sipAmount" placeholder="Monthly Investment (₹)">
+          <input type="number" id="sipYears" placeholder="Years">
+          <input type="number" id="sipRate" placeholder="Annual Return (%)">
+          <input type="number" id="sipInflation" placeholder="Inflation Rate (%) - Optional">
+          <button onclick="calculateSIP()">Calculate</button>
+          <div class="result" id="sipResult"></div>
+        </div>`
+      ,
+      lumpsum: `
+        <div class="calculator">
+          <h2>💰 Lumpsum Calculator</h2>
+          <input type="number" id="lumpAmount" placeholder="Lumpsum Amount (₹)">
+          <input type="number" id="lumpYears" placeholder="Years">
+          <input type="number" id="lumpRate" placeholder="Annual Return (%)">
+          <input type="number" id="lumpInflation" placeholder="Inflation Rate (%) - Optional">
+          <button onclick="calculateLumpsum()">Calculate</button>
+          <div class="result" id="lumpResult"></div>
+        </div>`
+      ,
+      retirement: `
+        <div class="calculator">
+          <h2>👵 Retirement Planner</h2>
+          <input type="number" id="currentAge" placeholder="Current Age">
+          <input type="number" id="retireAge" placeholder="Retirement Age">
+          <input type="number" id="monthlyExpense" placeholder="Monthly Expense Today (₹)">
+          <input type="number" id="inflation" placeholder="Inflation Rate (%) - Optional">
+          <input type="number" id="postRetReturn" placeholder="Post Retirement Return (%)">
+          <button onclick="calculateRetirement()">Calculate</button>
+          <div class="result" id="retireResult"></div>
+        </div>`
+      ,
+      goal: `
+        <div class="calculator">
+          <h2>🎯 Goal Planning</h2>
+          <input type="number" id="goalAmount" placeholder="Goal Amount (₹)">
+          <input type="number" id="goalYears" placeholder="Years to Goal">
+          <input type="number" id="goalReturn" placeholder="Expected Return (%)">
+          <input type="number" id="goalInflation" placeholder="Inflation Rate (%) - Optional">
+          <button onclick="calculateGoal()">Calculate</button>
+          <div class="result" id="goalResult"></div>
+        </div>`
+      ,
+      child: `
+        <div class="calculator">
+          <h2>👶 Child Education Planning</h2>
+          <input type="number" id="childExpense" placeholder="Future Education Cost (₹)">
+          <input type="number" id="childYears" placeholder="Years Left">
+          <input type="number" id="childReturn" placeholder="Expected Return (%)">
+          <input type="number" id="childInflation" placeholder="Inflation Rate (%) - Optional">
+          <button onclick="calculateChild()">Calculate</button>
+          <div class="result" id="childResult"></div>
+        </div>`
+    };
+
     function showCalculator() {
       const type = document.getElementById("calcType").value;
-      document.querySelectorAll(".calculator").forEach(el => el.style.display = "none");
-      document.getElementById(type).style.display = "block";
+      document.getElementById("calculators").innerHTML = calculatorTemplates[type];
+    }
+
+    function adjustForInflation(value, rate, years) {
+      if (!rate) return value;
+      return value / Math.pow(1 + (rate / 100), years);
     }
 
     function calculateSIP() {
-      const p = parseFloat(document.getElementById("sipAmount").value);
-      const n = parseFloat(document.getElementById("sipYears").value) * 12;
-      const r = parseFloat(document.getElementById("sipRate").value) / 12 / 100;
+      const p = +document.getElementById("sipAmount").value;
+      const years = +document.getElementById("sipYears").value;
+      const r = +document.getElementById("sipRate").value / 12 / 100;
+      const inf = +document.getElementById("sipInflation").value || 0;
+      const n = years * 12;
       const maturity = p * ((Math.pow(1 + r, n) - 1) * (1 + r)) / r;
-      document.getElementById("sipResult").innerText = `Maturity Amount: ₹${maturity.toFixed(2)}`;
+      const realValue = adjustForInflation(maturity, inf, years);
+      const invested = p * n;
+      const returns = maturity - invested;
+      document.getElementById("sipResult").innerText = `\nInvested Amount: ₹${invested.toFixed(2)}\nEstimated Returns: ₹${returns.toFixed(2)}\nMaturity Amount: ₹${maturity.toFixed(2)}\nAdjusted for Inflation: ₹${realValue.toFixed(2)}`;
     }
 
     function calculateLumpsum() {
-      const p = parseFloat(document.getElementById("lumpAmount").value);
-      const n = parseFloat(document.getElementById("lumpYears").value);
-      const r = parseFloat(document.getElementById("lumpRate").value) / 100;
-      const maturity = p * Math.pow(1 + r, n);
-      document.getElementById("lumpResult").innerText = `Maturity Amount: ₹${maturity.toFixed(2)}`;
+      const p = +document.getElementById("lumpAmount").value;
+      const years = +document.getElementById("lumpYears").value;
+      const r = +document.getElementById("lumpRate").value / 100;
+      const inf = +document.getElementById("lumpInflation").value || 0;
+      const maturity = p * Math.pow(1 + r, years);
+      const realValue = adjustForInflation(maturity, inf, years);
+      const returns = maturity - p;
+      document.getElementById("lumpResult").innerText = `\nInvested Amount: ₹${p.toFixed(2)}\nEstimated Returns: ₹${returns.toFixed(2)}\nMaturity Amount: ₹${maturity.toFixed(2)}\nAdjusted for Inflation: ₹${realValue.toFixed(2)}`;
     }
 
     function calculateRetirement() {
-      const currentAge = parseFloat(document.getElementById("currentAge").value);
-      const retireAge = parseFloat(document.getElementById("retireAge").value);
-      const expense = parseFloat(document.getElementById("monthlyExpense").value);
-      const inflation = parseFloat(document.getElementById("inflation").value);
+      const currentAge = +document.getElementById("currentAge").value;
+      const retireAge = +document.getElementById("retireAge").value;
+      const expense = +document.getElementById("monthlyExpense").value;
+      const inflation = +document.getElementById("inflation").value || 0;
+      const postRetReturn = +document.getElementById("postRetReturn").value / 100;
       const yearsToRetire = retireAge - currentAge;
       const inflatedExpense = expense * Math.pow(1 + inflation / 100, yearsToRetire);
       const corpus = inflatedExpense * 12 * 20;
-      document.getElementById("retireResult").innerText = `Estimated Retirement Corpus Needed: ₹${corpus.toFixed(2)}`;
+      document.getElementById("retireResult").innerText = `\nFuture Monthly Expense: ₹${inflatedExpense.toFixed(2)}\nEstimated Retirement Corpus Needed: ₹${corpus.toFixed(2)}`;
     }
 
     function calculateGoal() {
-      const fv = parseFloat(document.getElementById("goalAmount").value);
-      const n = parseFloat(document.getElementById("goalYears").value) * 12;
-      const r = parseFloat(document.getElementById("goalReturn").value) / 12 / 100;
+      const fv = +document.getElementById("goalAmount").value;
+      const years = +document.getElementById("goalYears").value;
+      const r = +document.getElementById("goalReturn").value / 12 / 100;
+      const inf = +document.getElementById("goalInflation").value || 0;
+      const n = years * 12;
       const sip = fv * r / ((Math.pow(1 + r, n) - 1) * (1 + r));
-      document.getElementById("goalResult").innerText = `Required SIP: ₹${sip.toFixed(2)} per month`;
+      const totalInvest = sip * n;
+      const realFV = adjustForInflation(fv, inf, years);
+      document.getElementById("goalResult").innerText = `\nRequired SIP: ₹${sip.toFixed(2)} per month\nTotal Invested: ₹${totalInvest.toFixed(2)}\nGoal Amount: ₹${fv.toFixed(2)}\nGoal Value (today's worth): ₹${realFV.toFixed(2)}`;
     }
 
     function calculateChild() {
-      const fv = parseFloat(document.getElementById("childExpense").value);
-      const n = parseFloat(document.getElementById("childYears").value) * 12;
-      const r = parseFloat(document.getElementById("childReturn").value) / 12 / 100;
+      const fv = +document.getElementById("childExpense").value;
+      const years = +document.getElementById("childYears").value;
+      const r = +document.getElementById("childReturn").value / 12 / 100;
+      const inf = +document.getElementById("childInflation").value || 0;
+      const n = years * 12;
       const sip = fv * r / ((Math.pow(1 + r, n) - 1) * (1 + r));
-      document.getElementById("childResult").innerText = `Required SIP: ₹${sip.toFixed(2)} per month`;
+      const totalInvest = sip * n;
+      const realFV = adjustForInflation(fv, inf, years);
+      document.getElementById("childResult").innerText = `\nRequired SIP: ₹${sip.toFixed(2)} per month\nTotal Invested: ₹${totalInvest.toFixed(2)}\nGoal Amount: ₹${fv.toFixed(2)}\nGoal Value (today's worth): ₹${realFV.toFixed(2)}`;
     }
   </script>
 </body>
