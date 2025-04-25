@@ -8,11 +8,9 @@
   <meta property="og:title" content="GrowFin Multi Calculator">
   <meta property="og:description" content="Your one-stop tool for SIP, Lumpsum, Retirement & Goal Planning">
   <meta property="og:image" content="logo.png">
-  <meta property="og:url" content="https://anushka-106.github.io/sip-calculator/">
-  
-  <!-- External Stylesheet (if needed) -->
+  <meta property="og:url" content="https://anushka-106.github.io/GrowFinWealth-Multi-calculator/">
+
   <style>
-    /* Global Styles */
     body {
       font-family: 'Segoe UI', sans-serif;
       padding: 20px;
@@ -35,7 +33,6 @@
       margin-top: 20px;
     }
 
-    /* Form and Button Styles */
     select, input, button {
       padding: 12px;
       margin: 8px 0;
@@ -57,7 +54,6 @@
       background-color: #45a049;
     }
 
-    /* Calculator Box Styles */
     .calculator {
       display: none;
       margin-top: 20px;
@@ -78,7 +74,6 @@
       margin-right: 8px;
     }
 
-    /* Responsive Design */
     @media (max-width: 600px) {
       select, input, button {
         width: 100%;
@@ -111,9 +106,9 @@
   <!-- SIP Calculator -->
   <div id="sip" class="calculator">
     <h2>📈 SIP Calculator</h2>
-    <input type="number" id="sipAmount" placeholder="Monthly Investment (₹)" required>
-    <input type="number" id="sipYears" placeholder="Years" required>
-    <input type="number" id="sipRate" placeholder="Annual Return (%)" required>
+    <input type="number" id="sipAmount" placeholder="Monthly Investment (₹)">
+    <input type="number" id="sipYears" placeholder="Years">
+    <input type="number" id="sipRate" placeholder="Annual Return (%)">
     <button onclick="calculateSIP()">Calculate</button>
     <div class="result" id="sipResult"></div>
   </div>
@@ -121,9 +116,9 @@
   <!-- Lumpsum Calculator -->
   <div id="lumpsum" class="calculator">
     <h2>💰 Lumpsum Calculator</h2>
-    <input type="number" id="lumpAmount" placeholder="Lumpsum Amount (₹)" required>
-    <input type="number" id="lumpYears" placeholder="Years" required>
-    <input type="number" id="lumpRate" placeholder="Annual Return (%)" required>
+    <input type="number" id="lumpAmount" placeholder="Lumpsum Amount (₹)">
+    <input type="number" id="lumpYears" placeholder="Years">
+    <input type="number" id="lumpRate" placeholder="Annual Return (%)">
     <button onclick="calculateLumpsum()">Calculate</button>
     <div class="result" id="lumpResult"></div>
   </div>
@@ -131,11 +126,11 @@
   <!-- Retirement Planner -->
   <div id="retirement" class="calculator">
     <h2>👵 Retirement Planner</h2>
-    <input type="number" id="currentAge" placeholder="Current Age" required>
-    <input type="number" id="retireAge" placeholder="Retirement Age" required>
-    <input type="number" id="monthlyExpense" placeholder="Monthly Expense Today (₹)" required>
-    <input type="number" id="inflation" placeholder="Inflation Rate (%)" required>
-    <input type="number" id="postRetReturn" placeholder="Post Retirement Return (%)" required>
+    <input type="number" id="currentAge" placeholder="Current Age">
+    <input type="number" id="retireAge" placeholder="Retirement Age">
+    <input type="number" id="monthlyExpense" placeholder="Monthly Expense Today (₹)">
+    <input type="number" id="inflation" placeholder="Inflation Rate (%)">
+    <input type="number" id="postRetReturn" placeholder="Post Retirement Return (%)">
     <button onclick="calculateRetirement()">Calculate</button>
     <div class="result" id="retireResult"></div>
   </div>
@@ -143,9 +138,9 @@
   <!-- Goal Planning -->
   <div id="goal" class="calculator">
     <h2>🎯 Goal Planning</h2>
-    <input type="number" id="goalAmount" placeholder="Goal Amount (₹)" required>
-    <input type="number" id="goalYears" placeholder="Years to Goal" required>
-    <input type="number" id="goalReturn" placeholder="Expected Return (%)" required>
+    <input type="number" id="goalAmount" placeholder="Goal Amount (₹)">
+    <input type="number" id="goalYears" placeholder="Years to Goal">
+    <input type="number" id="goalReturn" placeholder="Expected Return (%)">
     <button onclick="calculateGoal()">Calculate</button>
     <div class="result" id="goalResult"></div>
   </div>
@@ -153,22 +148,20 @@
   <!-- Child Education Planning -->
   <div id="child" class="calculator">
     <h2>👶 Child Education Planning</h2>
-    <input type="number" id="childExpense" placeholder="Future Education Cost (₹)" required>
-    <input type="number" id="childYears" placeholder="Years Left" required>
-    <input type="number" id="childReturn" placeholder="Expected Return (%)" required>
+    <input type="number" id="childExpense" placeholder="Future Education Cost (₹)">
+    <input type="number" id="childYears" placeholder="Years Left">
+    <input type="number" id="childReturn" placeholder="Expected Return (%)">
     <button onclick="calculateChild()">Calculate</button>
     <div class="result" id="childResult"></div>
   </div>
 
   <script>
-    // Show the selected calculator
     function showCalculator() {
       const type = document.getElementById("calcType").value;
       document.querySelectorAll(".calculator").forEach(el => el.style.display = "none");
       document.getElementById(type).style.display = "block";
     }
 
-    // SIP Calculator Logic
     function calculateSIP() {
       const p = parseFloat(document.getElementById("sipAmount").value);
       const n = parseFloat(document.getElementById("sipYears").value) * 12;
@@ -177,7 +170,6 @@
       document.getElementById("sipResult").innerText = `Maturity Amount: ₹${maturity.toFixed(2)}`;
     }
 
-    // Lumpsum Calculator Logic
     function calculateLumpsum() {
       const p = parseFloat(document.getElementById("lumpAmount").value);
       const n = parseFloat(document.getElementById("lumpYears").value);
@@ -186,20 +178,17 @@
       document.getElementById("lumpResult").innerText = `Maturity Amount: ₹${maturity.toFixed(2)}`;
     }
 
-    // Retirement Planner Logic
     function calculateRetirement() {
       const currentAge = parseFloat(document.getElementById("currentAge").value);
       const retireAge = parseFloat(document.getElementById("retireAge").value);
       const expense = parseFloat(document.getElementById("monthlyExpense").value);
       const inflation = parseFloat(document.getElementById("inflation").value);
-      const postRetReturn = parseFloat(document.getElementById("postRetReturn").value);
       const yearsToRetire = retireAge - currentAge;
       const inflatedExpense = expense * Math.pow(1 + inflation / 100, yearsToRetire);
       const corpus = inflatedExpense * 12 * 20;
       document.getElementById("retireResult").innerText = `Estimated Retirement Corpus Needed: ₹${corpus.toFixed(2)}`;
     }
 
-    // Goal Planning Logic
     function calculateGoal() {
       const fv = parseFloat(document.getElementById("goalAmount").value);
       const n = parseFloat(document.getElementById("goalYears").value) * 12;
@@ -208,10 +197,13 @@
       document.getElementById("goalResult").innerText = `Required SIP: ₹${sip.toFixed(2)} per month`;
     }
 
-    // Child Education Planning Logic
     function calculateChild() {
       const fv = parseFloat(document.getElementById("childExpense").value);
       const n = parseFloat(document.getElementById("childYears").value) * 12;
       const r = parseFloat(document.getElementById("childReturn").value) / 12 / 100;
       const sip = fv * r / ((Math.pow(1 + r, n) - 1) * (1 + r));
-      document.getElementById("childResult").innerText = `Required SIP: ₹
+      document.getElementById("childResult").innerText = `Required SIP: ₹${sip.toFixed(2)} per month`;
+    }
+  </script>
+</body>
+</html>
